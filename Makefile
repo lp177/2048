@@ -86,8 +86,4 @@ else
 	while (test 42) do clear; leaks $(NAME)_$(N); sleep 5; done
 endif
 
-moulinator:
-	make mn N=1
-	make -C ../moulitest-master sh1
-
 .PHONY: all NAME debug clean fclean re
