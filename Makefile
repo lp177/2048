@@ -1,4 +1,4 @@
-NAME = game_2048.
+NAME = game_2048
 SRC = main.c
 OBJ = $(SRC:.c=.o)
 FLG = -Wall -Wextra -Werror -g3
