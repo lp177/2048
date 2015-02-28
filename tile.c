@@ -6,7 +6,7 @@
 /*   By: llaffile <llaffile@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/28 17:52:21 by llaffile          #+#    #+#             */
-/*   Updated: 2015/02/28 23:18:29 by llaffile         ###   ########.fr       */
+/*   Updated: 2015/03/01 00:28:42 by llaffile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_tile			*new_tile(t_index position, int value)
 	tile->x = position.x;
 	tile->y = position.y;
 	tile->value = value;
-	printf("%d\n", value);
 	tile->merged = 0;
 	return (tile);
 }

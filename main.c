@@ -6,7 +6,7 @@
 /*   By: llaffile <llaffile@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/27 23:57:31 by luperez           #+#    #+#             */
-/*   Updated: 2015/02/28 23:14:08 by llaffile         ###   ########.fr       */
+/*   Updated: 2015/03/01 00:57:11 by llaffile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void			print_grid(t_env *env)
 
 	i =0;
 	j=0;
-	printf("%p %d %d %d %d %d %d %d\n",  env->grid,env->moved, env->score, env->won, env->over, env->keep_playing, env->start_tile, env->max_size);
+	printf("\n%p %d %d %d %d %d %d %d\n",  env->grid,env->moved, env->score, env->won, env->over, env->keep_playing, env->start_tile, env->max_size);
 	while (i < env->max_size)
 	{
 		j=0;
@@ -44,11 +44,9 @@ int				main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 	env = new_Env(4);
-	ft_putstr("flag1\n");
 	setup(env);
-	ft_putstr("flag4\n");
 	print_grid(env);
-	while (i++ < 20)
+	while (i++ < 10000)
 	{
 		move_process(rand() % 4, env);
 		print_grid(env);
@@ -61,13 +59,9 @@ void			moveTile(t_tile *tile, t_index cell, t_env env)
 {
 	if (tile == NULL)
 		return ;
-//	printf("in moveTile\n");
 	env.grid[tile->x][tile->y] = NULL;
-//	ft_putstr("ok1\n");
 	env.grid[cell.x][cell.y] = tile;
-//	ft_putstr("ok2\n");
 	updatePosition(tile, cell);
-//	ft_putstr("ok3\n");
 	return ;
 }
 
@@ -77,31 +71,22 @@ void			move_process(int direction, t_env *env)
 	t_vector	vector;
 
 	self = *env;
-//	printf("in move_process\n");
 	if (isGameTerminated(self))
 		return ;
-//	printf("game not isGameTerminated\n");
 	prepareTiles(self);
-//	printf("prepareTiles ok\n");
 	vector = getVector(direction);
-//	printf("vector ok %d  %d\n", vector.x, vector.y);
 	foreachXY(env, vector);
-//	printf("foreachXY OK\n");
 	if (env->moved)
 	{
-//		printf("in moved\n");
 		if (addRandomTile(self) == NULL)
-			{
-//				printf("succes add\n");
-				return ;
-			}
+		{
+			return ;
+		}
 		if (!ismovesAvailable(self))
 		{
-//			printf("over\n");
 			env->over = 1; // Game over!
 		}
 	}
-//	printf("out of move_process\n");
 	return ;
 }
 
@@ -114,34 +99,26 @@ void			foreachXY(t_env *env, t_vector vector)
 	t_tile		*tile;
 	int			**traversals;
 
-//	printf("in foreachXY\n");
 	traversals = buildTraversals(vector, env->max_size);
 	x = 0;
-//	printf("traversals ok\n");
 	while (x < env->max_size)
 	{
 		y = 0;
-//		printf("loop x %d\n", x);
 		while (y < env->max_size)
 		{
-//			printf("loop y %d\n", y);
 			cell.y = traversals[Y][y];
-//			printf("%d\n", cell.y);
 			cell.x = traversals[X][x];
-//			printf("%d\n", cell.x);
 			tile = getcellContent(cell, *env);
-//			printf("%p\n", tile);
 			mergeAndmove(env, cell, tile, vector);
-//			printf("mergeAndmove alright\n");
-			if (positionsEqual(tile, cell))
+			if (!positionsEqual(tile, cell))
+			{
 				env->moved = 1;
-//			printf("positionsEqual alright\n");
+			}
 			y++;
 		}
 		x++;
 	}
 	tabFree((void **)traversals, 2);
-//	printf("tabFree ok\n");
 	return ;
 }
 
@@ -152,34 +129,25 @@ void			mergeAndmove(t_env *env, t_index cell, t_tile *tile, t_vector vector)
 	t_tile		*next;
 	t_tile		*merge;
 
-//	printf("in mergeAndmove\n");
 	next = NULL;
-	if (tile != NULL)
-	{
-//		printf("in mergeAndmove tile != NULL\n");
-		target = findFarthestPosition(cell, vector, *env);
-//		ft_putstr("findFarthestPosition ok\n");
-		next = getcellContent(target.next, *env);
-//		printf("%p getcellContent ok\n", next);
-	}
+	if (tile == NULL)
+		return ;
+	target = findFarthestPosition(cell, vector, *env);
+	next = getcellContent(target.next, *env);
 	if (next && next->value == tile->value
 		&& tile->merged == 0)
 	{
-//		printf("needto merge\n");
 		merge = new_tile(target.next, tile->value * 2);
 		merge->merged = 1;
 		insertTile(merge, *env);
 		updatePosition(tile, target.next);
-		removeTile(next, *env);
+//		removeTile(next, *env);
 		env->score += merge->value;
 		if (merge->value == WIN_VALUE)
 			env->won = 1;
 	}
 	else
-	{
-//		ft_putstr("needto moveTile in mergeAndmove\n");
 		moveTile(tile, target.farthest, *env);
-	}
 	return ;
 }
 
@@ -189,7 +157,6 @@ t_tile			*addRandomTile(t_env env)
 	t_tile	*tile;
 
 	tile = NULL;
-//	printf("in addRandomTile\n");
 	if (iscellsAvailable(env))
 	{
 		value = ((rand() % 10) < 9) ? 2 : 4;
@@ -264,7 +231,6 @@ void			prepareTiles(t_env env)
 		{
 			if ((tile = getcellContent(i, env)) != NULL)
 			{
-//				printf("in prepareTiles\n");
 				tile->merged = 0;
 				savePosition(tile);
 			}
@@ -279,14 +245,12 @@ void			setup(t_env *env)
 {
 	if ((env->grid  = new_Grid(env)) == NULL)
 		return ;
-//	ft_putstr("flag2\n");
 	env->score = 0;
 	env->over  = 0;
 	env->won = 0;
 	env->keep_playing = 0;
 	env->start_tile = 2;
 	addStartTiles(*env);
-//	ft_putstr("flag3\n");
 }
 
 void			addStartTiles(t_env env)
@@ -294,10 +258,8 @@ void			addStartTiles(t_env env)
 	int		i;
 
 	i = 0;
-//	printf("in addStartTiles\n");
 	while (i++ < env.start_tile)
 	{
-//		printf("in addStartTiles loop nb %d\n", i);
 		addRandomTile(env);
 	}
 	return ;
