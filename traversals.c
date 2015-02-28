@@ -6,7 +6,7 @@
 /*   By: llaffile <llaffile@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/28 18:09:02 by llaffile          #+#    #+#             */
-/*   Updated: 2015/02/28 21:37:36 by llaffile         ###   ########.fr       */
+/*   Updated: 2015/02/28 23:13:20 by llaffile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,14 @@ t_target		findFarthestPosition(t_index cell, t_vector vector, t_env env)
 	t_index		previous;
 	t_target	target;
 
+//	ft_putstr("in findFarthestPosition\n");
 	while (1)
 	{
+//		ft_putstr("in lopp findFarthestPosition\n");
 		previous = cell;
 		cell.x = previous.x + vector.x;
 		cell.y = previous.y + vector.y;
-		if (isWithinBounds(cell, env.max_size) && iscellAvailable(cell, env))
+		if (!isWithinBounds(cell, env.max_size) || !iscellAvailable(cell, env))
 			break ;
 	}
 	target.farthest = previous;
