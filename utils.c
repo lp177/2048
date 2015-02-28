@@ -6,14 +6,14 @@
 /*   By: llaffile <llaffile@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/28 18:02:55 by llaffile          #+#    #+#             */
-/*   Updated: 2015/02/28 20:49:04 by llaffile         ###   ########.fr       */
+/*   Updated: 2015/02/28 22:04:45 by llaffile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "game_2048.h"
 
 
-void			*reverse(void *tab, size_t max, size_t size)
+void			*reverse(void *tab, int max, size_t size)
 {
 	char	*reverse_tab;
 	int		i;
@@ -32,8 +32,8 @@ void			*reverse(void *tab, size_t max, size_t size)
 
 void			**tabAlloc(size_t x, size_t y, size_t size)
 {
-	char	**tab;
-	int		i;
+	char		**tab;
+	size_t		i;
 
 	if ((tab = (char **)ft_memalloc(x * sizeof(void *))) == NULL)
 		return (NULL);
@@ -53,8 +53,8 @@ void			tabFree(void **tab, size_t size)
 	int		i;
 
 	i = 0;
-	ptr = (char **)tab
-	while (i < size)
+	ptr = (char **)tab;
+	while (i < (int)size)
 	{
 		free(ptr[i]);
 		i++;

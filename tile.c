@@ -6,7 +6,7 @@
 /*   By: llaffile <llaffile@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/28 17:52:21 by llaffile          #+#    #+#             */
-/*   Updated: 2015/02/28 20:49:25 by llaffile         ###   ########.fr       */
+/*   Updated: 2015/02/28 21:35:59 by llaffile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_tile			*new_tile(t_index position, int value)
 
 void			savePosition(t_tile *tile)
 {
-	tile->previous.x = tile.x;
-	tile->previous.y = tile.y;
+	tile->previous.x = tile->x;
+	tile->previous.y = tile->y;
 	return ;
 }

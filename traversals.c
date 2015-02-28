@@ -6,7 +6,7 @@
 /*   By: llaffile <llaffile@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/28 18:09:02 by llaffile          #+#    #+#             */
-/*   Updated: 2015/02/28 20:48:56 by llaffile         ###   ########.fr       */
+/*   Updated: 2015/02/28 21:37:36 by llaffile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 int				**buildTraversals(t_vector vector, size_t max)
 {
 	int		**traversals;
-	int		i;
+	size_t		i;
 
 	i = 0;
-	if ((traversals = tabAlloc(2, max, sizeof(int))) == NULL)
+	if ((traversals = (int **)tabAlloc(2, max, sizeof(int))) == NULL)
 		return (NULL);
-	while (i < env.max)
+	while (i < max)
 	{
 		traversals[X][i] = i;
 		traversals[Y][i] = i;
@@ -62,7 +62,7 @@ t_vector		getVector(int direction)
 	return (vector);
 }
 
-t_index			*findFarthestPosition(t_index cell, t_vector vector, t_env env)
+t_target		findFarthestPosition(t_index cell, t_vector vector, t_env env)
 {
 	t_index		previous;
 	t_target	target;

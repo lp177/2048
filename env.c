@@ -6,7 +6,7 @@
 /*   By: llaffile <llaffile@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/28 18:04:16 by llaffile          #+#    #+#             */
-/*   Updated: 2015/02/28 20:55:04 by llaffile         ###   ########.fr       */
+/*   Updated: 2015/02/28 21:06:44 by llaffile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void			clearEnv(t_env *env)
 	int		j;
 
 	i = 0;
-	while (i < env->max_size)
+	while (i < (int)env->max_size)
 	{
 		j = 0;
-		while (j < env->max_size)
+		while (j < (int)env->max_size)
 		{
 			free(env->grid[i][j]);
 			j++;

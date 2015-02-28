@@ -6,7 +6,7 @@
 /*   By: llaffile <llaffile@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/28 17:53:39 by llaffile          #+#    #+#             */
-/*   Updated: 2015/02/28 20:49:13 by llaffile         ###   ########.fr       */
+/*   Updated: 2015/02/28 21:57:26 by llaffile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 int				iscellAvailable(t_index cell, t_env env)
 {
-	return (!iscellOccupied(cell, env));
+	return ((!iscellOccupied(cell, env)));
 }
 
 int				iscellOccupied(t_index cell, t_env env)
 {
-	return (getcellContent(cell, env) != NULL);
+	return ((getcellContent(cell, env) != NULL));
 }
 
 t_tile			*getcellContent(t_index cell, t_env env)
@@ -38,10 +38,10 @@ int				iscellsAvailable(t_env env)
 
 	lenght = 0;
 	ft_bzero(cells_a, 16 * sizeof(t_index));
-	getAvailableCells(env, cells_a);
-	while (lenght < 16 && cells_a[lenght] != 0)
+	getAvailablecells(env, cells_a);
+	while (lenght < 16)
 		lenght++;
-	return (!!lenght)
+	return (!!lenght);
 }
 
 t_index			*getAvailablecells(t_env env, t_index *cells_a)
@@ -50,12 +50,12 @@ t_index			*getAvailablecells(t_env env, t_index *cells_a)
 	t_tile		*tile;
 	int			cnt;
 
-	i = 0;
 	cnt = 0;
-	while (i.x < env.max_size)
+	i.x = 0;
+	while (i.x < (int)env.max_size)
 	{
 		i.y = 0;
-		while (i.y < env.max_size)
+		while (i.y < (int)env.max_size)
 		{
 			if ((tile = getcellContent(i, env)) == NULL)
 				cells_a[cnt++] = i;
@@ -66,10 +66,13 @@ t_index			*getAvailablecells(t_env env, t_index *cells_a)
 	return (cells_a);
 }
 
-int				isWhitinBounds(t_index pos, size_t max)
+int				isWithinBounds(t_index pos, size_t max)
 {
-	return ((pos.x >= 0 && pos.x < max)
-			&& (pos.y >= 0 && pos.y < max));
+	int		sign;
+
+	sign = (int)max;
+	return ((pos.x >= 0 && pos.x < sign)
+			&& (pos.y >= 0 && pos.y < sign));
 }
 
 t_index			randomAvailableCell(t_env env)
@@ -79,8 +82,8 @@ t_index			randomAvailableCell(t_env env)
 
 	lenght = 0;
 	ft_bzero(cells_a, 16 * sizeof(t_index));
-	getAvailableCells(env, cells_a);
-	while (lenght < 16 && cells_a[lenght] != 0)
+	getAvailablecells(env, cells_a);
+	while (lenght < 16)
 		lenght++;
 	return (cells_a[rand() % lenght]);
 }
@@ -89,7 +92,7 @@ t_tile			***new_Grid(t_env *env)
 {
 	if((env->grid = empty(env->max_size)) == NULL)
 		return (NULL);
-	return (env->grid)
+	return (env->grid);
 }
 
 // Build a grid of the specified size
@@ -99,5 +102,5 @@ t_tile			***empty(size_t size)
 
 	if ((grid = (t_tile ***)tabAlloc(size, size, sizeof(t_tile *))) == NULL)
 		return (NULL);
-	return (grid)
+	return (grid);
 }
