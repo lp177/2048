@@ -1,5 +1,5 @@
 NAME = game_2048
-SRC = main.c
+SRC = main.c tile.c traversals.c utils.c grid.c env.c
 OBJ = $(SRC:.c=.o)
 FLG = -Wall -Wextra -Werror -g3
 INC = -I libft/includes/
@@ -11,7 +11,7 @@ CYAN_L = \033[1;36m
 NC = \033[0m
 HOME = "`echo $HOME`"
 VALGRIND = "$(HOME)/valgrind/bin/valgrind --leak-check=full --tool=memcheck --dsymutil=yes --show-leak-kinds=all"
-LIBS= -L libft/ -lft -lncurses 
+LIBS= -L libft/ -lft -lncurses
 
 $(NAME): $(OBJ)
 	@echo "$(GREEN)== Make ==$(PURPLE)"
