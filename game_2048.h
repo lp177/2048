@@ -6,7 +6,7 @@
 /*   By: llaffile <llaffile@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/02/28 00:22:43 by luperez           #+#    #+#             */
-/*   Updated: 2015/02/28 22:04:59 by llaffile         ###   ########.fr       */
+/*   Updated: 2015/02/28 23:28:11 by luperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct		s_tile
 
 typedef struct		s_env
 {
-	t_tile	***grid;
+	t_tile			***grid;
 	int				moved;
 	int				score;
 	int				won;
