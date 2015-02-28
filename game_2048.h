@@ -13,6 +13,7 @@
 #ifndef GAME_2048_H
 # define GAME_2048_h
 
+#include <signal.h>
 #include <ncurses.h>
 
 #include "libft.h"
@@ -26,5 +27,7 @@ typedef struct		s_game
 	WINDOW	*score;
 	WINDOW	*home;
 }					t_game;
+
+extern t_game		*g;
 
 #endif

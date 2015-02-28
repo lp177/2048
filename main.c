@@ -12,9 +12,11 @@
 
 #include "game_2048.h"
 
-void	game_io(t_game *g)
+t_game *g;
+
+void	game_io(void)
 {
-	char	c;
+	char			c;
 
 	while ((c = wgetch(g->home)) != ERR)
 	{
@@ -24,7 +26,7 @@ void	game_io(t_game *g)
 	}
 }
 
-void	game_windows(t_game *g)
+void	game_windows(void)
 {
 	g->score_size = 10;
 	getmaxyx(stdscr, g->y, g->x);
@@ -54,7 +56,7 @@ void	borders(WINDOW *screen)
 	}
 }
 
-void	background(t_game *g)
+void	background(void)
 {
 	borders(g->field);
 	borders(g->score);
@@ -62,11 +64,19 @@ void	background(t_game *g)
 	mvwprintw(g->score, 1, 1, "Score");
 }
 
-void	resize(t_game *g)
+void	refresh_w(void)
+{
+	wrefresh(g->home);
+	wrefresh(g->field);
+	wrefresh(g->score);
+}
+
+void	resize(int placebo)
 {
 	int	new_y;
 	int	new_x;
 
+	(void)placebo;
 	getmaxyx(stdscr, new_y, new_x);
 	if (new_y != g->y || new_x != g->x)
 	{
@@ -79,33 +89,43 @@ void	resize(t_game *g)
 		wclear(g->home);
 		wclear(g->field);
 		wclear(g->score);
-		background(g);
+		background();
 	}
-	wrefresh(g->home);
-	wrefresh(g->field);
-	wrefresh(g->score);
+	refresh_w();
+}
+
+void	listen(void)
+{
+	char	c;
+
+	//signal(SIGWINCH, resize);
+	c = 0;
+	while (c != 27)
+	{
+		resize(0);
+		c = wgetch(g->home);
+	}
 }
 
 void	game(void)
 {
-	t_game	game;
-
-	ft_bzero(&game, sizeof(t_game));
-	game_windows(&game);
-	background(&game);
-	while(1)
-		resize(&game);
-	delwin(game.field);
-	delwin(game.score);
+	game_windows();
+	background();
+	refresh_w();
+	listen();
+	delwin(g->field);
+	delwin(g->score);
 }
 
 int main(void)
 {
+	if (!(g = (t_game *)ft_memalloc(sizeof(t_game))))
+		return (-1);
 	initscr();
 	noecho();
 	cbreak();
 	curs_set(0);
 	game();
-	//endwin();
-	return 0;
+	endwin();
+	return (0);
 }
