@@ -16,18 +16,23 @@
 #include <signal.h>
 #include <ncurses.h>
 
-#include "libft.h"
+#include "libft/includes/libft.h"
 
 typedef struct		s_game
 {
-	int		score_size;
-	int		x;
-	int		y;
-	WINDOW	*field;
-	WINDOW	*score;
-	WINDOW	*home;
+	int			score_size;
+	int			x;
+	int			y;
+	WINDOW		*board;
+	WINDOW		*score;
+	WINDOW		*home;
 }					t_game;
 
 extern t_game		*g;
+			
+void			borders(WINDOW *screen);
+void			background(void);
+void			refresh_w(void);
+void			resize(void);
 
 #endif

@@ -1,5 +1,5 @@
 NAME = game_2048
-SRC = main.c
+SRC = main.c design.c
 OBJ = $(SRC:.c=.o)
 FLG = -Wall -Wextra -Werror -g3
 INC = -I libft/includes/
