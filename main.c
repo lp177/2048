@@ -12,60 +12,53 @@
 
 #include "game_2048.h"
 
-t_game *g;
-
-void	game_io(void)
+void	game_windows(t_game *g)
 {
-	char			c;
-
-	while ((c = wgetch(g->home)) != ERR)
-	{
-		waddch(g->board, c);
-		wrefresh(g->board);
-		wrefresh(g->score);
-	}
-}
-
-void	game_windows(void)
-{
+	getmaxyx(stdscr, g->h, g->w);
+	g->tile_width = (g->w - 6) / g->tile_size;
+	g->tile_height = (g->h - g->score_size - 10) / g->tile_size;
 	g->score_size = 10;
-	getmaxyx(stdscr, g->y, g->x);
-	g->home = newwin(g->y, g->x, 0, 0);
-	g->board = newwin(g->y - g->score_size, g->x, 0, 0);
-	g->score = newwin(g->score_size, g->x, g->y - g->score_size, 0);
+	g->board.h = g->h - g->score_size + 1;
+	g->board.w = g->w;
+	g->score.h = g->score_size;
+	g->score.w = g->w;
+	g->score.y = g->board.h - 1;
 }
 
-void	listen(void)
+void	listen(t_game *g)
 {
-	char	c;
+	int		c;
 
 	c = 0;
 	while (c != 27)
 	{
-		resize();
-		c = wgetch(g->home);
+		resize(g);
+		c = getch();
 	}
 }
 
-void	game(void)
+void	game(t_game *g)
 {
-	game_windows();
-	background();
-	refresh_w();
-	listen();
-	delwin(g->board);
-	delwin(g->score);
+	game_windows(g);
+	background(g);
+	board_create(g);
+	refresh();
+	listen(g);
 }
 
 int main(void)
 {
+	t_game	*g;
+
 	if (!(g = (t_game *)ft_memalloc(sizeof(t_game))))
 		return (-1);
+	g->tile_size = TILE_SIZE;
 	initscr();
 	noecho();
 	cbreak();
 	curs_set(0);
-	game();
+	start_color();
+	game(g);
 	endwin();
 	return (0);
 }
