@@ -36,7 +36,6 @@ typedef struct		s_tile
 typedef struct		s_game
 {
 	int			score_size;
-	int			nb_tile;
 	int			tile_size;
 	int			tile_width;
 	int			tile_height;
@@ -57,9 +56,12 @@ enum e_const
 void			game_windows(t_game *g);
 void			board_create(t_game *g);
 
+void			redraw(t_game *g);
 void			borders(t_window *win);
 void			background(t_game *g);
 void			resize(t_game *g);
 void			maj_gps(t_game *g);
+
+void			displacement(t_game *g, int c);
 
 #endif

@@ -38,6 +38,7 @@ void	draw_tile(t_game *g, t_tile *tile)
 {
 	int		x;
 	int		y;
+	char	*buff;
 
 	attron(COLOR_PAIR(3));
 	y = 0;
@@ -49,7 +50,15 @@ void	draw_tile(t_game *g, t_tile *tile)
 	}
 	init_pair(4, COLOR_BLACK, COLOR_YELLOW);
 	attron(COLOR_PAIR(4));
-	mvprintw(tile->y + g->tile_height / 2, tile->x + g->tile_width / 2 - (ft_nbrlen(tile->value) / 2), ft_itoa(tile->value));
+	if (tile->value > 0)
+	{
+		buff = ft_itoa(tile->value);
+		mvprintw(tile->y + g->tile_height / 2,
+			tile->x + g->tile_width / 2 - (ft_nbrlen(tile->value) / 2),
+			buff);
+		if (buff)
+			free(buff);
+	}
 	attroff(COLOR_PAIR(4));
 }
 
@@ -82,7 +91,6 @@ void	maj_gps(t_game *g)
 		{
 			g->tiles[y][x]->x = (x * g->tile_width) + 3;
 			g->tiles[y][x]->y = (y * g->tile_height) + 1;
-			g->tiles[y][x]->value = y + x;
 		}
 	}
 }
@@ -107,9 +115,10 @@ void	board_create(t_game *g)
 				return ;
 			tiles[y][x]->x = (x * g->tile_width) + 3;
 			tiles[y][x]->y = (y * g->tile_height) + 1;
-			tiles[y][x]->value = y + x;
 		}
 	}
+	tiles[0][2]->value = 2;
+	tiles[2][0]->value = 2;
 	g->tiles = tiles;
 	draw_board(g);
 }
@@ -134,6 +143,15 @@ void	background(t_game *g)
 	attroff(COLOR_PAIR(1));
 }
 
+void	redraw(t_game *g)
+{
+	game_windows(g);
+	maj_gps(g);
+	wclear(stdscr);
+	background(g);
+	draw_board(g);
+}
+
 void	resize(t_game *g)
 {
 	int	new_w;
@@ -144,11 +162,7 @@ void	resize(t_game *g)
 	{
 		g->w = new_w;
 		g->h = new_h;
-		game_windows(g);
-		maj_gps(g);
-		wclear(stdscr);
-		background(g);
-		draw_board(g);
+		redraw(g);
 	}
 	refresh();
 }

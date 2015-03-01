@@ -29,12 +29,22 @@ void	listen(t_game *g)
 {
 	int		c;
 
-	c = 0;
-	while (c != 27)
+ft_putstr("\n\n=====\nListen...\n====\n\n");
+	c = getch();
+	while (c == KEY_LEFT || c == KEY_RIGHT || c == KEY_UP || c == KEY_DOWN || c != 27)
 	{
+ft_putstr("\n\n=====\nWho?\n====\n\n");
+		if (c == KEY_LEFT || c == KEY_RIGHT || c == KEY_UP || c == KEY_DOWN)
+		{
+			displacement(g, c);
+			ft_putstr("\n\n====\nKey move detected\n====\n\n");
+		}
+		else
+			ft_putstr("\n\n====\nNot a key for diplacement\n====\n\n");
 		resize(g);
 		c = getch();
 	}
+ft_putstr("\n\n=====\nEnd of listening...\n====\n\n");
 }
 
 void	game(t_game *g)
@@ -46,6 +56,21 @@ void	game(t_game *g)
 	listen(g);
 }
 
+void	end_game(t_game *g)
+{
+	int	x;
+	int	y;
+
+	y = -1;
+	while (g->tiles[++y])
+	{
+		x = -1;
+		while (g->tiles[y][++x])
+			free(g->tiles[y][++x]);
+	}
+	free(g);
+}
+
 int main(void)
 {
 	t_game	*g;
@@ -54,11 +79,13 @@ int main(void)
 		return (-1);
 	g->tile_size = TILE_SIZE;
 	initscr();
+	keypad(stdscr, TRUE);
 	noecho();
 	cbreak();
 	curs_set(0);
 	start_color();
 	game(g);
+	end_game(g);
 	endwin();
 	return (0);
 }
