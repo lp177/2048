@@ -72,7 +72,7 @@ char				**explode(char const *src, char *sep)
 	int		len;
 
 	clone = NULL;
-	if (!sep || !sep || !&sep || !&sep || !*sep || !*src
+	if (!sep || !sep || !*sep || !*src
 		|| !(clone = clean_start(src, sep))
 		|| !(clone = strdup(clone))
 		|| !(len = count(clone, sep, 0) + 2)

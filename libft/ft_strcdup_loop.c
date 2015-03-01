@@ -33,7 +33,7 @@ void				*ft_strcdup_loop(void **dst, const void *src, int c)
 	while (((unsigned char *)src)[++i])
 	{
 		if (((unsigned char *)src)[i] == (unsigned char)c)
-			return (&((void *)src)[i + 1]);
+			return (&((char *)src)[i + 1]);
 		((unsigned char *)*dst)[i] = ((unsigned char *)src)[i];
 	}
 	return (NULL);

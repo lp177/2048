@@ -70,12 +70,10 @@ static	char	**execute(int z, char *str)
 char			**ft_strsplit_fast(char const *s, char c)
 {
 	int		z;
-	size_t	len;
 	char	*str;
 
 	if (s == NULL)
 		return (NULL);
-	len = ft_strlen(s) + 1;
 	if (!(str = ft_strnew(ft_strlen(s))))
 		return (NULL);
 	z = prepare(s, str, c);

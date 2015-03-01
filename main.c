@@ -39,18 +39,14 @@ void			print_grid(t_env *env)
 int				main(int argc, char **argv)
 {
 	t_env	*env;
-	int i=0;
 	srand(time(NULL));
 	(void)argc;
 	(void)argv;
 	env = new_Env(4);
 	setup(env);
 	print_grid(env);
-	while (i++ < 10000)
-	{
-		move_process(rand() % 4, env);
-		print_grid(env);
-	}
+	move_process(0, env);
+	print_grid(env);
 	return (0);
 }
 
