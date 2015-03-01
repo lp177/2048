@@ -29,22 +29,22 @@ void	listen(t_game *g)
 {
 	int		c;
 
-ft_putstr("\n\n=====\nListen...\n====\n\n");
+	ft_putstrerrno("\n\n=====\nListen...\n====\n\n");
 	c = getch();
-	while (c == KEY_LEFT || c == KEY_RIGHT || c == KEY_UP || c == KEY_DOWN || c != 27)
+	while (c == KEY_LEFT || c == KEY_RIGHT || c == KEY_UP || c == KEY_DOWN
+		|| c != 27)
 	{
-ft_putstr("\n\n=====\nWho?\n====\n\n");
 		if (c == KEY_LEFT || c == KEY_RIGHT || c == KEY_UP || c == KEY_DOWN)
 		{
+			ft_putstrerrno("\n\n====\nKey move detected\n====\n\n");
 			displacement(g, c);
-			ft_putstr("\n\n====\nKey move detected\n====\n\n");
 		}
 		else
-			ft_putstr("\n\n====\nNot a key for diplacement\n====\n\n");
+			ft_putstrerrno("\n\n====\nNot a key for diplacement\n====\n\n");
 		resize(g);
 		c = getch();
 	}
-ft_putstr("\n\n=====\nEnd of listening...\n====\n\n");
+	ft_putstrerrno("\n\n=====\nEnd of listening...\n====\n\n");
 }
 
 void	game(t_game *g)
@@ -77,6 +77,8 @@ int main(void)
 
 	if (!(g = (t_game *)ft_memalloc(sizeof(t_game))))
 		return (-1);
+	if (WIN_VALUE % 2 > 0)
+		ft_error("Invalide win value.");
 	g->tile_size = TILE_SIZE;
 	initscr();
 	keypad(stdscr, TRUE);

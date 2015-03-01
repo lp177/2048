@@ -15,6 +15,7 @@
 
 #include <signal.h>
 #include <ncurses.h>
+#include <time.h>
 
 #include "libft/includes/libft.h"
 
@@ -48,7 +49,7 @@ typedef struct		s_game
 
 enum e_const
 {
-	WIN_VALUE = 2048
+	WIN_VALUE = 120
 };
 
 # define TILE_SIZE 4
